@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace WinFormsApp2
 {
     public partial class Form1 : Form
@@ -15,15 +17,22 @@ namespace WinFormsApp2
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string email = textBox5.Text;
             // Проверяем, содержат ли первые два TextBox текст
             if (string.IsNullOrEmpty(textBox5.Text))
             {
                 textBox7.Text = "login";
             }
-            else
+            else if (IsValidEmail(email))
             {
+                textBox7.Text = email;
                 textBox7.Text = textBox5.Text;
             }
+            else 
+            {
+                textBox7.Text = "Invalid email";
+            }
+           
 
             if (string.IsNullOrEmpty(textBox6.Text))
             {
@@ -48,6 +57,12 @@ namespace WinFormsApp2
         private void textBox8_TextChanged(object sender, EventArgs e)
         {
 
+        }
+        private bool IsValidEmail(string email)
+        {
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            Regex regex = new Regex(pattern);
+            return regex.IsMatch(email);
         }
     }
 }
